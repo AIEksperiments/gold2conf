@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Grand Grains Control Panel</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <main class="shell">
+    <section id="loginView" class="login-wrap">
+      <div class="brand-card">
+        <div class="brand-mark">GG</div>
+        <div>
+          <p class="eyebrow">GRAND GRAINS</p>
+          <h1>Control Panel</h1>
+          <p class="muted">Live balansering av spillkonfigurasjonen i Supabase.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="login-card">
+        <h2>Admin-innlogging</h2>
+        <label>
+          E-post
+          <input id="emailInput" type="email" autocomplete="username" required />
+        </label>
+        <label>
+          Passord
+          <input id="passwordInput" type="password" autocomplete="current-password" required />
+        </label>
+        <button class="primary" type="submit">Logg inn</button>
+        <p id="loginError" class="error-text"></p>
+      </form>
+    </section>
+
+    <section id="appView" class="app hidden">
+      <header class="topbar">
+        <div class="brand-inline">
+          <div class="brand-mark small">GG</div>
+          <div>
+            <p class="eyebrow">GRAND GRAINS</p>
+            <strong>Control Panel</strong>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <span id="connectionPill" class="pill neutral">Kobler til…</span>
+          <span id="versionPill" class="pill">v–</span>
+          <button id="reloadBtn" class="ghost">Last live på nytt</button>
+          <button id="logoutBtn" class="ghost">Logg ut</button>
+        </div>
+      </header>
+
+      <div id="adminWarning" class="warning hidden">
+        Du er logget inn, men denne brukeren er ikke registrert som Grand Grains-admin.
+        Du kan lese konfigurasjonen, men ikke publisere eller rulle tilbake.
+      </div>
+
+      <div class="workspace">
+        <aside class="sidebar">
+          <div class="sidebar-block">
+            <label class="search-label" for="searchInput">Søk i alle variabler</label>
+            <input id="searchInput" class="search" type="search" placeholder="f.eks. bear, volume, cost…" />
+          </div>
+
+          <nav id="sectionNav" class="section-nav"></nav>
+
+          <div class="sidebar-footer">
+            <div class="mini-stat">
+              <span>Felter</span>
+              <strong id="fieldCount">0</strong>
+            </div>
+            <div class="mini-stat">
+              <span>Status</span>
+              <strong id="dirtyStatus">Synkron</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="content">
+          <div class="toolbar">
+            <div class="tabs" role="tablist">
+              <button class="tab active" data-tab="editor">Editor</button>
+              <button class="tab" data-tab="json">Rå JSON</button>
+              <button class="tab" data-tab="history">Historikk</button>
+            </div>
+
+            <div class="toolbar-actions">
+              <button id="validateBtn" class="ghost">Valider</button>
+              <button id="discardBtn" class="ghost" disabled>Forkast endringer</button>
+              <button id="publishBtn" class="primary" disabled>Save & Publish</button>
+            </div>
+          </div>
+
+          <div id="validationBox" class="validation hidden"></div>
+
+          <section id="editorTab" class="tab-panel">
+            <div id="sectionHeading" class="section-heading"></div>
+            <div id="editorRoot" class="editor-root"></div>
+          </section>
+
+          <section id="jsonTab" class="tab-panel hidden">
+            <div class="json-toolbar">
+              <p class="muted">Hele konfigurasjonen. Endringer her kan importeres tilbake til editoren.</p>
+              <button id="applyJsonBtn" class="ghost">Bruk JSON i editor</button>
+            </div>
+            <textarea id="jsonEditor" spellcheck="false"></textarea>
+          </section>
+
+          <section id="historyTab" class="tab-panel hidden">
+            <div class="history-head">
+              <div>
+                <h2>Versjonshistorikk</h2>
+                <p class="muted">Hver publisering arkiverer forrige config automatisk.</p>
+              </div>
+              <button id="refreshHistoryBtn" class="ghost">Oppdater</button>
+            </div>
+            <div id="historyRoot" class="history-list"></div>
+          </section>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <span id="userLabel"></span>
+        <span id="updatedLabel"></span>
+      </footer>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
